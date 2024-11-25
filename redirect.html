@@ -9,10 +9,12 @@
       function downloadAndRedirect() {
         // Trigger PDF download
         const pdfLink =
-          "https://s3.ap-southeast-2.amazonaws.com/backend-assets.amberelectric.com.au/battery/HADR-BESS2-Fact-Sheet-V1.0.pdf"; // Replace with your actual PDF link
+          "https://s3.ap-southeast-2.amazonaws.com/backend-assets.amberelectric.com.au/battery/HADR-BESS2-Fact-Sheet-V1.0.pdf";
+
         const anchor = document.createElement("a");
         anchor.href = pdfLink;
-        anchor.download = "yourfile.pdf"; // Specify the file name
+        anchor.setAttribute("download", "HADR-BESS2-Fact-Sheet-V1.0.pdf"); // Forces download
+        anchor.setAttribute("target", "_blank"); // Ensures it doesn't interrupt redirection
         document.body.appendChild(anchor);
         anchor.click();
         document.body.removeChild(anchor);
