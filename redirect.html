@@ -1,35 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Redirecting...</title>
-    <script>
-      // Trigger PDF download and redirect
-      function downloadAndRedirect() {
-        // Trigger PDF download
-        const pdfLink =
-          "https://s3.ap-southeast-2.amazonaws.com/backend-assets.amberelectric.com.au/battery/HADR-BESS2-Fact-Sheet-V1.0.pdf";
-
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+  <script>
+    async function downloadAndRedirect() {
+      try {
+        // Fetch the file data
+        const pdfUrl = "https://s3.ap-southeast-2.amazonaws.com/backend-assets.amberelectric.com.au/battery/HADR-BESS2-Fact-Sheet-V1.0.pdf";
+        const response = await fetch(pdfUrl);
+        
+        // Convert the response to a Blob
+        const blob = await response.blob();
+        
+        // Create a URL for the Blob
+        const url = URL.createObjectURL(blob);
+        
+        // Create a temporary anchor element to trigger download
         const anchor = document.createElement("a");
-        anchor.href = pdfLink;
-        anchor.setAttribute("download", "HADR-BESS2-Fact-Sheet-V1.0.pdf"); // Forces download
-        anchor.setAttribute("target", "_blank"); // Ensures it doesn't interrupt redirection
+        anchor.href = url;
+        anchor.download = "HADR-BESS2-Fact-Sheet-V1.0.pdf"; // Specify file name for download
         document.body.appendChild(anchor);
         anchor.click();
         document.body.removeChild(anchor);
 
-        // Redirect to Google Form
-        const googleFormLink =
-          "https://docs.google.com/forms/d/e/1FAIpQLSe-KukzOO53lpMCxeXqyY-D2ODcdpeCcFmXXG9oBMUAnlw6Qg/viewform?usp=sf_link"; // Replace with your Google Form link
-        window.location.href = googleFormLink;
-      }
+        // Revoke the Blob URL to free up memory
+        URL.revokeObjectURL(url);
 
-      // Trigger the function after the page loads
-      window.onload = downloadAndRedirect;
-    </script>
-  </head>
-  <body>
-    <p>Redirecting...</p>
-  </body>
+        // Redirect to Google Form after download
+        const googleFormLink = "https://docs.google.com/forms/d/e/1FAIpQLSe-KukzOO53lpMCxeXqyY-D2ODcdpeCcFmXXG9oBMUAnlw6Qg/viewform?usp=sf_link"; // Replace with your Google Form link
+        setTimeout(() => {
+          window.location.href = googleFormLink;
+        }, 1000); 
+      } catch (error) {
+        console.error("Failed to download the file:", error);
+        alert("Unable to download the file. Please try again.");
+      }
+    }
+
+    window.onload = downloadAndRedirect;
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
 </html>
