@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting...</title>
+    <script>
+      // Trigger PDF download and redirect
+      function downloadAndRedirect() {
+        // Trigger PDF download
+        const pdfLink =
+          "https://s3.ap-southeast-2.amazonaws.com/backend-assets.amberelectric.com.au/battery/HADR-BESS2-Fact-Sheet-V1.0.pdf"; // Replace with your actual PDF link
+        const anchor = document.createElement("a");
+        anchor.href = pdfLink;
+        anchor.download = "yourfile.pdf"; // Specify the file name
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+
+        // Redirect to Google Form
+        const googleFormLink =
+          "https://docs.google.com/forms/d/e/1FAIpQLSe-KukzOO53lpMCxeXqyY-D2ODcdpeCcFmXXG9oBMUAnlw6Qg/viewform?usp=sf_link"; // Replace with your Google Form link
+        window.location.href = googleFormLink;
+      }
+
+      // Trigger the function after the page loads
+      window.onload = downloadAndRedirect;
+    </script>
+  </head>
+  <body>
+    <p>Redirecting...</p>
+  </body>
+</html>
