@@ -35,6 +35,9 @@
           "HADR-BESS2-Fact-Sheet-V1.0.pdf"
         );
 
+        // Add a delay before downloading the second file
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // 1-second delay
+
         // Download the second file
         await downloadFile(
           "https://backend-assets.amberelectric.com.au/battery/SmartShift-Terms%26Conditions.pdf",
