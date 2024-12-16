@@ -112,31 +112,35 @@
       }
     }
 
-    async function downloadAndRedirect() {
-      closePopup(); // Close popup before starting downloads
+  async function downloadAndRedirect() {
+  closePopup(); // Close popup before starting downloads
 
-      try {
-        // Download the first file
-        await downloadFile(
-          "https://s3.ap-southeast-2.amazonaws.com/backend-assets.amberelectric.com.au/battery/HADR-BESS2-Fact-Sheet-V1.0.pdf",
-          "HADR-BESS2-Fact-Sheet-V1.0.pdf"
-        );
+  try {
+    // Download the first file
+    await downloadFile(
+      "https://s3.ap-southeast-2.amazonaws.com/backend-assets.amberelectric.com.au/battery/HADR-BESS2-Fact-Sheet-V1.0.pdf",
+      "HADR-BESS2-Fact-Sheet-V1.0.pdf"
+    );
 
-        // Download the second file
-        await downloadFile(
-          "https://backend-assets.amberelectric.com.au/battery/SmartShift-Terms%26Conditions.pdf",
-          "SmartShift-Terms-and-Conditions.pdf"
-        );
+    // Add a short delay before downloading the second file
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // 1-second delay
 
-        // Redirect to Google Form after downloads
-        const googleFormLink = "https://docs.google.com/forms/d/e/1FAIpQLSe-KukzOO53lpMCxeXqyY-D2ODcdpeCcFmXXG9oBMUAnlw6Qg/viewform?usp=sf_link"; 
-        setTimeout(() => {
-          window.location.href = googleFormLink;
-        }, 1000);
-      } catch (error) {
-        console.error("An error occurred during the download process:", error);
-      }
-    }
+    // Download the second file
+    await downloadFile(
+      "https://backend-assets.amberelectric.com.au/battery/SmartShift-Terms%26Conditions.pdf",
+      "SmartShift-Terms-and-Conditions.pdf"
+    );
+
+    // Redirect to Google Form after downloads
+    const googleFormLink = "https://docs.google.com/forms/d/e/1FAIpQLSe-KukzOO53lpMCxeXqyY-D2ODcdpeCcFmXXG9oBMUAnlw6Qg/viewform?usp=sf_link";
+    setTimeout(() => {
+      window.location.href = googleFormLink;
+    }, 1000);
+  } catch (error) {
+    console.error("An error occurred during the download process:", error);
+    alert("There was an issue downloading the files. Please try again.");
+  }
+}
 
     function showPopup() {
       document.getElementById("popup").style.display = "block";
